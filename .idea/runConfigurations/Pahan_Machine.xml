@@ -1,0 +1,45 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Pahan Machine" type="GlassfishConfiguration" factoryName="Remote" APPLICATION_SERVER_NAME="GlassFish 4.1.1" ALTERNATIVE_JRE_ENABLED="false">
+    <option name="HOST" value="193.32.20.242" />
+    <option name="PORT" value="4848" />
+    <option name="LOCAL" value="false" />
+    <option name="OPEN_IN_BROWSER_URL" value="http://193.32.20.242" />
+    <deployment />
+    <server-settings>
+      <data>
+        <option name="adminServerHost" value="" />
+        <option name="clusterName" value="" />
+        <option name="password" value="thingGFF411" />
+        <option name="secured" value="true" />
+        <option name="stagingRemotePath" value="" />
+        <option name="transportHostId" value="" />
+        <option name="transportStagingTarget">
+          <TransportTarget>
+            <option name="id" value="909b653f-fffb-4bea-8464-cffc959fa3ac" />
+            <id>909b653f-fffb-4bea-8464-cffc959fa3ac</id>
+          </TransportTarget>
+        </option>
+        <option name="virtualServer" value="domain1" />
+        <password>thingGFF411</password>
+        <secured>true</secured>
+        <virtual-server>domain1</virtual-server>
+        <admin-server-host />
+        <cluster-name />
+        <transport-target>
+          <TransportTarget>
+            <option name="id" value="909b653f-fffb-4bea-8464-cffc959fa3ac" />
+            <id>909b653f-fffb-4bea-8464-cffc959fa3ac</id>
+          </TransportTarget>
+        </transport-target>
+        <staging-path />
+        <host-id />
+      </data>
+    </server-settings>
+    <predefined_log_file id="GlassFish" enabled="true" />
+    <RunnerSettings RunnerId="Debug">
+      <option name="DEBUG_PORT" value="55797" />
+      <option name="LOCAL" value="false" />
+    </RunnerSettings>
+    <method />
+  </configuration>
+</component>

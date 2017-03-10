@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>bat15.restful</groupId>
-    <artifactId>IOPT-Server</artifactId>
+    <groupId>bat15</groupId>
+    <artifactId>IOPT-Executor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>IOPT-Server</name>
+    <name>IOPT-Executor</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -16,17 +16,26 @@
         <jaxrs.version>2.0.1</jaxrs.version>   
         
         <glassfish.user>admin</glassfish.user>  
-        <glassfish.pwdfile>glassfish.pwd</glassfish.pwdfile>  
-        <glassfish.domain>193.32.20.242</glassfish.domain>   
-        <glassfish.host>193.32.20.242</glassfish.host>
-        <glassfish.adminport>4848</glassfish.adminport>            
+        <glassfish.domain>domain1</glassfish.domain>
+        <glassfish.host>localhost</glassfish.host>
+        <glassfish.adminport>4848</glassfish.adminport>
+        <glassfish.directory>C:/glassfish4</glassfish.directory>
                     
     </properties>
     
                     
                     
     <dependencies>
-            
+
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+
         <dependency>
             <groupId>javax.json</groupId>
             <artifactId>javax.json-api</artifactId>
@@ -65,18 +74,6 @@
             <version>2.4.1</version>
         </dependency>
         <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-core</artifactId>
-            <version>3.2.10</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.6.2-RC1</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4.1212</version>
@@ -94,6 +91,18 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -164,30 +173,31 @@
                       <autoCreate>false</autoCreate>
                       <domain>
                         <name>${glassfish.domain}</name>
-                        <httpPort>${glassfish.httpPort}</httpPort>
-                        <adminPort>${glassfish.adminPort}</adminPort>
+                        <httpPort>8080</httpPort>
+                        <adminPort>4848</adminPort>
                       </domain>
                     </configuration>
                   </execution>
                 </executions>                    
                 <configuration> 
-                    <!--<glassfishDirectory>/opt/glassfish4</glassfishDirectory>-->
+                    <glassfishDirectory>${glassfish.directory}</glassfishDirectory>
                     <!--<glassfishDirectory>D:\CreepyStation\Work\Virtual environment\GlassFishInpuJavaEE\glassfish</glassfishDirectory>--> 
                     <user>${glassfish.user}</user> 
-                    <passwordFile>${basedir}/passwords/${glassfish.pwdfile}</passwordFile> 
+                    <adminPassword>changeit</adminPassword>
                     <echo>true</echo> 
                     <debug>true</debug> 
                     <terse>true</terse> 
                     <domain> 
                         <name>${glassfish.domain}</name> 
                         <host>${glassfish.host}</host> 
-                        <adminPort>${glassfish.adminport}</adminPort> 
+                        <adminPort>${glassfish.adminport}</adminPort>
+
                         <httpPort>8080</httpPort> 
                     </domain> 
                     <components> 
                         <component> 
                             <name>${project.artifactId}</name> 
-                            <artifact>${project.build.directory}/${project.build.finalName}.war</artifact> 
+                            <artifact>${project.build.directory}/${project.build.finalName}.war</artifact>
                         </component> 
                     </components> 
                 </configuration> 
