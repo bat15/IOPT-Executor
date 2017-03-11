@@ -1,5 +1,8 @@
-# iot-server
-java iot server
+# IOPT-Executor
 
-### Доступ к RESTful сервисам осуществляется по ссылке: 
-ip:port/iot-server/models/\<model_name\>/[object_name]/[property_name]/[script_name]
+Deploy on Glassfish:
+
+```
+mvn clean install glassfish:redeploy
+```
+
