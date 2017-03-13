@@ -1,0 +1,1 @@
+Get-Content "C:\glassfish4\domains\domain1\logs\server.log" -Wait

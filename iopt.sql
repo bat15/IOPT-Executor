@@ -1,7 +1,9 @@
 ﻿-- Database: iopt
 
-DROP DATABASE iopt;
 
+---------------
+-- Execute once
+---------------
 CREATE DATABASE iopt
   WITH OWNER = postgres
        ENCODING = 'UTF8'
@@ -10,6 +12,10 @@ CREATE DATABASE iopt
        LC_CTYPE = 'Russian_Russia.1251'
        CONNECTION LIMIT = -1;
 
-CREATE TABLE scripts (id SERIAL, content TEXT);
+------------------------
+-- Execute every testing
+------------------------
 
-INSERT INTO scripts  values (0, 'test content');
+DROP TABLE IF EXISTS scripts;
+CREATE TABLE scripts (id SERIAL, content TEXT);
+INSERT INTO scripts VALUES (0, 'function run(name) { print(''I will work with, '' + name);};');

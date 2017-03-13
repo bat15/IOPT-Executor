@@ -1,6 +1,6 @@
 <job-scheduling-data
-        xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
         xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData
 	http://www.quartz-scheduler.org/xml/job_scheduling_data_1_8.xsd"
         version="1.8">
@@ -19,8 +19,8 @@
                 <name>testTrigger</name>
                 <job-name>TestJob</job-name>
                 <job-group>TestGroup</job-group>
-                <!-- It will run every 5 seconds -->
-                <cron-expression>0/5 * * * * ?</cron-expression>
+                <!-- It will run every 30 seconds -->
+                <cron-expression>0/30 * * * * ?</cron-expression>
             </cron>
         </trigger>
     </schedule>
