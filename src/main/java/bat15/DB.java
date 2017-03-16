@@ -3,12 +3,15 @@ package bat15;
 import bat15.security.Security;
 
 import javax.annotation.Resource;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by xoton on 11.03.2017.
- */
+@Local
+@Stateless
 public class DB {
 
     /* always null */
@@ -49,7 +52,10 @@ public class DB {
 
             Class.forName("org.postgresql.Driver");
 
-            try (Connection conn = getConnectionFromProperties(getDefaultProperties());
+            Properties properties = this.properties != null ?
+                    this.properties: getDefaultProperties();
+
+            try (Connection conn = getConnectionFromProperties(properties);
                  Statement stmt = conn.createStatement()) {
 
                 ResultSet rs = stmt.executeQuery("SELECT * FROM script");
@@ -75,6 +81,71 @@ public class DB {
 
         return firstScript;
     }
+
+    public List<ScriptEntity> getScripts()
+    {
+        List<ScriptEntity> scripts = new ArrayList<>();
+
+        String query = "SELECT id, name, value, id_property FROM script;";
+
+        try {
+
+            Class.forName("org.postgresql.Driver");
+
+            Properties properties = this.properties != null ?
+                    this.properties: getDefaultProperties();
+
+            try (Connection conn = getConnectionFromProperties(properties);
+                 Statement stmt = conn.createStatement()) {
+
+                ResultSet rs = stmt.executeQuery(query);
+
+                while (rs.next()) {
+
+                    ScriptEntity entity = new ScriptEntity();
+                    entity.setId(rs.getString("id"));
+                    entity.setName(rs.getString("name"));
+                    entity.setValue(rs.getString("value"));
+                    entity.setIdProperty(rs.getString("id_property"));
+
+                    scripts.add(entity);
+
+                }
+                rs.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException ce)
+        {
+            ce.printStackTrace();
+        }
+        return scripts;
+    }
+
+    public class ModelEntity
+    {
+        private String id;
+        private String name;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+
 
 
 }
