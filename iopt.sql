@@ -19,3 +19,9 @@ CREATE DATABASE iopt
 DROP TABLE IF EXISTS scripts;
 CREATE TABLE scripts (id SERIAL, content TEXT);
 INSERT INTO scripts VALUES (0, 'function run(name) { print(''I will work with, '' + name);};');
+
+
+SELECT *
+FROM model, object, property, script
+WHERE
+  script.id_property = property.id AND property.id_object = object.id AND object.id_model = model.id AND script.id = 1;

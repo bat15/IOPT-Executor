@@ -12,7 +12,7 @@
         <option name="password" value="thingGFF411" />
         <option name="secured" value="true" />
         <option name="stagingRemotePath" value="" />
-        <option name="transportHostId" value="" />
+        <option name="transportHostId" />
         <option name="transportStagingTarget">
           <TransportTarget>
             <option name="id" value="909b653f-fffb-4bea-8464-cffc959fa3ac" />
