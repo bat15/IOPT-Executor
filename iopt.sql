@@ -21,7 +21,15 @@ CREATE TABLE scripts (id SERIAL, content TEXT);
 INSERT INTO scripts VALUES (0, 'function run(name) { print(''I will work with, '' + name);};');
 
 
-SELECT *
+SELECT
+  model.id       AS model_id,
+  model.name     AS model_name,
+  object.name    AS object_name,
+  property.name  AS property_name,
+  property.value AS property_value
 FROM model, object, property, script
 WHERE
-  script.id_property = property.id AND property.id_object = object.id AND object.id_model = model.id AND script.id = 1;
+  script.id_property = property.id
+  AND property.id_object = object.id
+  AND object.id_model = model.id
+  AND script.id = 1;

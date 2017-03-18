@@ -1,0 +1,110 @@
+<html>
+<head>
+    <title>Executor service</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.2.0.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+        sdata = [];
+        sel = {};
+        onload = function (e) {
+
+            var url = window.location.href.replace("html/index.html", "rest/scripts/");
+
+            $.getJSON(url, function (data) {
+
+                sdata = data;
+                sdata.forEach(function (s) {
+                    var b = document.createElement("button");
+                    b.classList.add("list-group-item");
+                    b.classList.add("script-item");
+                    b.setAttribute("ids", s.id);
+                    b.innerText = s.id + ": " + s.name;
+                    $("#slist")[0].appendChild(b);
+                });
+
+                let $script_btns = $(".script-item");
+
+                $script_btns.on('click', function (e) {
+
+                    [].slice.call($(".script-item")).forEach(function (t) {
+                        t.classList.remove("active")
+                    });
+                    var b = e.currentTarget;
+                    b.classList.add("active");
+                    var selected = sdata.find(function (e) {
+                        return e.id == b.getAttribute("ids");
+                    });
+
+                    sel = selected;
+                    document.getElementById("code").value = selected.value;
+                });
+
+                $script_btns[0].click();
+
+            });
+
+            $("#btn-save").on("click", function (e) {
+
+
+                var curl = window.location.href.replace("html/index.html", "rest/scripts/" + sel.id);
+                var cdata = {
+                    "name": sel.name,
+                    "value": document.getElementById("code").value
+                };
+
+                console.debug(curl);
+
+                var callback = function (data) {
+                    console.debug(data);
+
+                    sel.value = cdata.value;
+                    sdata.find(s => s.id == sel.id).value = cdata.value;
+                };
+
+                $.ajax({
+                    url: curl,
+                    type: 'PUT',
+                    success: callback,
+                    data: JSON.stringify(cdata),
+                    contentType: "application/json"
+                });
+
+            });
+
+
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h1>Executor control panel</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div id="slist" class="list-group">
+
+            </div>
+        </div>
+        <div class="col-lg-8">
+
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Script content</h4>
+                    <button id="btn-save" type="button" class="btn btn-primary  pull-right">Save</button>
+                </div>
+                <div class="panel-body">
+                    <textarea class="form-control" rows="20" style="font-family:monospace;"
+                              id="code">Test content</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

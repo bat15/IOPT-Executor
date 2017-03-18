@@ -1,44 +1,38 @@
 package bat15;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-
+import javax.enterprise.context.ApplicationScoped;
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.util.logging.Logger;
 
-
-public class MyScheduler implements  Job {
+/**
+ * Created by xoton on 18.03.2017.
+ */
+@ApplicationScoped
+public class ScriptExecutorImpl implements ScriptExecutor {
 
     private static Logger log = Logger.getLogger("scheduler");
 
 
     @Override
-    public void execute(JobExecutionContext context)
-            throws JobExecutionException {
-/*
-        log.severe("This is test task and it must run every 5 seconds");
-
-
-        DB db = new DBImpl();
-
-        String script = db.getFirstScript();
+    public void execute(String code) throws Exception {
+        log.severe("Running code : " + code);
 
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("JavaScript");
 
         Invocable inv = (Invocable) engine;
         try {
-            engine.eval(script);
+            engine.eval(code);
             String testModelName = "modelName";
             inv.invokeFunction("run", testModelName);
 
         } catch (ScriptException | NoSuchMethodException e) {
             e.printStackTrace();
+            throw new Exception(e);
         }
-
-
-        log.severe("Script from database: " + script);
-            */
 
     }
 }

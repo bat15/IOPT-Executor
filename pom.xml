@@ -15,11 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jersey2.version>2.19</jersey2.version>
         <jaxrs.version>2.0.1</jaxrs.version>   
-        
-        <glassfish.user>admin</glassfish.user>  
-        <glassfish.domain>domain1</glassfish.domain>
-        <glassfish.host>193.32.20.242</glassfish.host>
-        <glassfish.adminport>4848</glassfish.adminport>
+
         <glassfish.directory>C:/glassfish4</glassfish.directory>
                     
     </properties>
@@ -123,6 +119,18 @@
             <version>1.0.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.glassfish.jersey.ext.cdi</groupId>
+            <artifactId>jersey-weld2-se</artifactId>
+            <version>${jersey2.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.ext.cdi</groupId>
+            <artifactId>jersey-cdi1x</artifactId>
+            <version>${jersey2.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -132,8 +140,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
@@ -176,13 +184,10 @@
             
             <plugin> 
                 <groupId>org.glassfish.maven.plugin</groupId> 
-                <artifactId>maven-glassfish-plugin</artifactId> 
-                <version>2.1</version> 
-                
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>2.1</version>
                 <executions>
                   <execution>
-            <!--        <groupId>org.glassfish.maven.plugin</groupId> 
-                    <artifactId>maven-glassfish-plugin</artifactId>           -->
                     <phase>none</phase>
                     <goals>
                       <goal>deploy</goal>
@@ -192,7 +197,7 @@
                       <terse>false</terse>
                       <autoCreate>false</autoCreate>
                       <domain>
-                        <name>${glassfish.domain}</name>
+                          <name>domain1</name>
                         <httpPort>8080</httpPort>
                         <adminPort>4848</adminPort>
                       </domain>
@@ -201,17 +206,15 @@
                 </executions>                    
                 <configuration> 
                     <glassfishDirectory>${glassfish.directory}</glassfishDirectory>
-                    <!--<glassfishDirectory>D:\CreepyStation\Work\Virtual environment\GlassFishInpuJavaEE\glassfish</glassfishDirectory>--> 
-                    <user>${glassfish.user}</user>
+                    <user>admin</user>
                     <adminPassword>thingGFF411</adminPassword>
                     <echo>true</echo> 
                     <debug>true</debug> 
                     <terse>true</terse> 
-                    <domain> 
-                        <name>${glassfish.domain}</name> 
-                        <host>${glassfish.host}</host> 
-                        <adminPort>${glassfish.adminport}</adminPort>
-
+                    <domain>
+                        <name>domain1</name>
+                        <host>193.32.20.242</host>
+                        <adminPort>4848</adminPort>
                         <httpPort>8080</httpPort> 
                     </domain> 
                     <components> 
@@ -228,5 +231,59 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>local</id>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.glassfish.maven.plugin</groupId>
+                        <artifactId>maven-glassfish-plugin</artifactId>
+                        <version>2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                                <configuration>
+                                    <debug>true</debug>
+                                    <terse>false</terse>
+                                    <autoCreate>false</autoCreate>
+                                    <domain>
+                                        <name>domain1</name>
+                                        <httpPort>8080</httpPort>
+                                        <adminPort>4848</adminPort>
+                                    </domain>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <glassfishDirectory>${glassfish.directory}</glassfishDirectory>
+                            <user>admin</user>
+                            <adminPassword>changeit</adminPassword>
+                            <echo>true</echo>
+                            <debug>true</debug>
+                            <terse>true</terse>
+                            <domain>
+                                <name>domain1</name>
+                                <host>localhost</host>
+                                <adminPort>4848</adminPort>
+                                <httpPort>8080</httpPort>
+                            </domain>
+                            <components>
+                                <component>
+                                    <name>${project.artifactId}</name>
+                                    <artifact>${project.build.directory}/${project.build.finalName}.war</artifact>
+                                </component>
+                            </components>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
